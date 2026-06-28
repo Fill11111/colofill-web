@@ -45,7 +45,7 @@ body {
 
 /* Process card tilt + hover */
 .p-card {
-  transition: transform 0.3s cubic-bezier(0.22, 0.68, 0, 1.2), box-shadow 0.3s;
+  transition: transform 0.3s cubic-bezier(0.22, 0.68, 0, 1.2), box-shadow 0.3s, opacity 0.55s ease;
 }
 .p-card-1 { transform: rotate(-0.75deg); }
 .p-card-2 { transform: rotate(0.8deg); }
@@ -54,4 +54,19 @@ body {
 .p-card:hover {
   transform: translateY(-6px) rotate(0deg) !important;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+}
+
+/* Process cards: override reveal's transform so rotation is preserved after reveal */
+.p-card.reveal { opacity: 0; }
+.p-card-1.reveal.in { transform: rotate(-0.75deg); opacity: 1; }
+.p-card-2.reveal.in { transform: rotate(0.8deg); opacity: 1; }
+.p-card-3.reveal.in { transform: rotate(-0.5deg); opacity: 1; }
+.p-card-4.reveal.in { transform: rotate(0.6deg); opacity: 1; }
+
+@media (max-width: 900px) {
+  .p-card-1, .p-card-2, .p-card-3, .p-card-4 { transform: none; }
+  .p-card-1.reveal.in,
+  .p-card-2.reveal.in,
+  .p-card-3.reveal.in,
+  .p-card-4.reveal.in { transform: none; }
 }
