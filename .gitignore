@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# colofill content-pipeline automation (machine-specific / runtime output)
+.claude/settings.local.json
+automation/logs/
+.claude/content/
+.claude/agents/logs/

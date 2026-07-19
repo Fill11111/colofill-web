@@ -1,0 +1,14 @@
+Run the full content pipeline for the colofill-web project. You are running on the user's local Mac, so the Claude-in-Chrome tools and the Notion connector are available in this session.
+
+Steps, in order:
+1. Invoke the `scout` subagent (Agent tool) with its default recurring task: source Instagram Reels for Personal Branding and AI niches, quota 9 TOFU / 9 MOFU / 3 BOFU (21 total), respecting the dedup log at .claude/agents/logs/scout-proposed-clips.jsonl. If Chrome is not logged in to Instagram, stop and report that clearly — do not try to log in.
+2. Pass scout's candidate list to the `fit-checker` subagent to gate against .claude/context/channel-profile.md (PASS/FAIL, with bounded backfill via scout if slots are short).
+3. Pass every PASSed clip to the `analyzer` subagent for full structural/creative analysis.
+4. Pass each analysis to the `writer` subagent to produce an original adapted script per clip.
+5. Pass each finished script to the `qc-lead` subagent for final quality gate and push to the user's Notion content-plan database (target week = the current week when this runs, per qc-lead's week/month logic).
+
+If .claude/context/channel-profile.md does not exist, stop after step 1 and report that fit-checker (and everything downstream) cannot run until the channel profile is created — do not skip the gate.
+
+If the Notion connector is not available in this session, do NOT discard the finished work: have qc-lead write each approved packet (topic, funnel, full script, source link, reason, confidence, week/month) to .claude/content/pending-notion/<reel-id>.md instead, and say clearly in the summary that these still need to be pushed to Notion manually.
+
+End with a summary of what moved through each stage and what qc-lead pushed to Notion (or wrote to pending-notion, or the zero-result line if nothing survived the pipeline this run).
